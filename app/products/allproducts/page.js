@@ -60,7 +60,7 @@ function Products() {
             </tr>
           </thead>
           <tbody>
-            {productsData.isArray() && productsData.length > 0 ? (
+            {Array.isArray(productsData) && productsData.length > 0 ? (
               productsData.map((product) => (
                 <tr key={product._id} className="border-b hover:bg-gray-50">
                   <td className="p-3">{product.product_name}</td>
