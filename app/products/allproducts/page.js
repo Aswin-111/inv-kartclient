@@ -24,7 +24,9 @@ function Products() {
       setProductsData(response.data.data);
       setPagination({
         ...pagination,
-        totalPages: Math.ceil(response.data.pagination.total / pagination.limit),
+        totalPages: Math.ceil(
+          response.data.pagination.total / pagination.limit
+        ),
       });
     };
     fetchProducts();
@@ -58,33 +60,43 @@ function Products() {
             </tr>
           </thead>
           <tbody>
-            {productsData.map((product) => (
-              <tr key={product._id} className="border-b hover:bg-gray-50">
-                <td className="p-3">{product.product_name}</td>
-                <td className="p-3">${product.price}</td>
-                <td className="p-3">
-                  <span
-                    className={`px-2 py-1 rounded-full text-sm font-medium ${
-                      product.status === "Available"
-                        ? "bg-green-200 text-green-800"
-                        : "bg-red-200 text-red-800"
-                    }`}
-                  >
-                    {product.status}
-                  </span>
-                </td>
-                <td className="p-3">
-                  <img
-                    src={`http://localhost:7500/products/${product.file_name}`}
-                    alt="product"
-                    className="w-12 h-12 rounded-lg shadow-sm"
-                  />
-                </td>
-                <td className="p-3">
-                  <Image src={threedots} alt="Menu" width={20} height={20} className="cursor-pointer" />
-                </td>
-              </tr>
-            ))}
+            {productsData.isArray() && productsData.length > 0 ? (
+              productsData.map((product) => (
+                <tr key={product._id} className="border-b hover:bg-gray-50">
+                  <td className="p-3">{product.product_name}</td>
+                  <td className="p-3">${product.price}</td>
+                  <td className="p-3">
+                    <span
+                      className={`px-2 py-1 rounded-full text-sm font-medium ${
+                        product.status === "Available"
+                          ? "bg-green-200 text-green-800"
+                          : "bg-red-200 text-red-800"
+                      }`}
+                    >
+                      {product.status}
+                    </span>
+                  </td>
+                  <td className="p-3">
+                    <img
+                      src={`http://localhost:7500/products/${product.file_name}`}
+                      alt="product"
+                      className="w-12 h-12 rounded-lg shadow-sm"
+                    />
+                  </td>
+                  <td className="p-3">
+                    <Image
+                      src={threedots}
+                      alt="Menu"
+                      width={20}
+                      height={20}
+                      className="cursor-pointer"
+                    />
+                  </td>
+                </tr>
+              ))
+            ) : (
+              <div>Records not found!</div>
+            )}
           </tbody>
         </table>
       </div>
