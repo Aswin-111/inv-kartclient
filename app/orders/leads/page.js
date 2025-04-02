@@ -34,7 +34,7 @@ function AddLeadPopup({ isOpen, onClose, onLeadAdded, setShowAddLeadPopup }) {
       setErrors({});
     }
   }, [isOpen]);
- 
+
   const validateForm = () => {
     const formErrors = {};
     if (!formData.name.trim()) formErrors.name = "Full name is required";
@@ -191,7 +191,13 @@ function Leads() {
           setLeads(response.data.leads);
           setPagination((prev) => ({
             ...prev,
-            totalPages: Math.ceil(response.data.total / pagination.limit),
+            totalPages: Math.ceil(
+              response.data.total
+                ? response.data.total
+                : 0 / pagination.limit
+                ? pagination.limit
+                : 0
+            ),
           }));
         }
       } catch (error) {
@@ -339,33 +345,37 @@ function Leads() {
             </tr>
           </thead>
           <tbody>
-            {leads
-              .filter((lead) =>
-                (lead.name || "").toLowerCase().includes(search.toLowerCase())
-              )
-              .map((lead, index) => (
-                <tr
-                  key={lead._id}
-                  className={index % 2 === 0 ? "bg-gray-100" : "bg-white"}
-                >
-                  <td className="py-3 px-6">{lead.name}</td>
-                  <td className="py-3 px-6">{lead.phone}</td>
-                  <td className="py-3 px-6">{lead.rating}</td>
-                  <td className="py-3 px-6">
-                    <span className="px-3 py-1 rounded-full text-white text-sm bg-blue-500">
-                      {lead.status}
-                    </span>
-                  </td>
-                  <td className="py-3 px-6 text-center">
-                    <button
-                      className="p-2 rounded-full hover:bg-gray-200"
-                      onClick={(e) => handleToggleDropdown(e, lead._id)}
-                    >
-                      <FiMoreVertical size={20} />
-                    </button>
-                  </td>
-                </tr>
-              ))}
+            {Array.isArray(leads) && leads.length > 0 ? (
+              leads
+                .filter((lead) =>
+                  (lead.name || "").toLowerCase().includes(search.toLowerCase())
+                )
+                .map((lead, index) => (
+                  <tr
+                    key={lead._id}
+                    className={index % 2 === 0 ? "bg-gray-100" : "bg-white"}
+                  >
+                    <td className="py-3 px-6">{lead.name}</td>
+                    <td className="py-3 px-6">{lead.phone}</td>
+                    <td className="py-3 px-6">{lead.rating}</td>
+                    <td className="py-3 px-6">
+                      <span className="px-3 py-1 rounded-full text-white text-sm bg-blue-500">
+                        {lead.status}
+                      </span>
+                    </td>
+                    <td className="py-3 px-6 text-center">
+                      <button
+                        className="p-2 rounded-full hover:bg-gray-200"
+                        onClick={(e) => handleToggleDropdown(e, lead._id)}
+                      >
+                        <FiMoreVertical size={20} />
+                      </button>
+                    </td>
+                  </tr>
+                ))
+            ) : (
+              <div>Data not found</div>
+            )}
           </tbody>
         </table>
       </div>
