@@ -111,27 +111,31 @@ function AllOrders() {
             </tr>
           </thead>
           <tbody>
-            {orders.map((order, index) => (
-              <tr
-                key={order._id}
-                className={index % 2 === 0 ? "bg-gray-100" : "bg-white"}
-              >
-                <td className="py-3 px-6">{order.orderId}</td>
-                <td className="py-3 px-6">
-                  <span className="px-3 py-1 rounded-full text-white text-sm bg-blue-500">
-                    {order.status}
-                  </span>
-                </td>
-                <td className="py-3 px-6 text-center">
-                  <button
-                    className="p-2 rounded-full hover:bg-gray-200"
-                    onClick={(e) => handleToggleDropdown(e, order._id)}
-                  >
-                    <FaEllipsisV />
-                  </button>
-                </td>
-              </tr>
-            ))}
+            {Array.isArray(orders) && orders.length > 0 ? (
+              orders.map((order, index) => (
+                <tr
+                  key={order._id}
+                  className={index % 2 === 0 ? "bg-gray-100" : "bg-white"}
+                >
+                  <td className="py-3 px-6">{order.orderId}</td>
+                  <td className="py-3 px-6">
+                    <span className="px-3 py-1 rounded-full text-white text-sm bg-blue-500">
+                      {order.status}
+                    </span>
+                  </td>
+                  <td className="py-3 px-6 text-center">
+                    <button
+                      className="p-2 rounded-full hover:bg-gray-200"
+                      onClick={(e) => handleToggleDropdown(e, order._id)}
+                    >
+                      <FaEllipsisV />
+                    </button>
+                  </td>
+                </tr>
+              ))
+            ) : (
+              <div>Data not found</div>
+            )}
           </tbody>
         </table>
       </div>

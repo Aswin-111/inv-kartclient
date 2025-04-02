@@ -81,7 +81,7 @@ function Category() {
                   Loading categories...
                 </td>
               </tr>
-            ) : categoryData.length > 0 ? (
+            ) : (Array.isArray(categoryData) && categoryData.length > 0 ) ? (
               categoryData.map((category) => (
                 <tr key={category._id} className="border-t hover:bg-gray-50">
                   <td className="py-3 px-6">{category.category_name}</td>
@@ -130,7 +130,7 @@ function Category() {
       </div>
 
       {/* Pagination */}
-      {pagination.totalPages > 1 && (
+      {(pagination.totalPages && pagination.totalPages > 1) && (
         <div className="mt-6">
           <Pagination
             currentPage={pagination.currentPage}

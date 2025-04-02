@@ -117,40 +117,46 @@ function HomePage() {
                 </tr>
               </thead>
               <tbody className="bg-white">
-                {designTasks.map((item) => (
-                  <tr key={item.id}>
-                    <td className="px-5 py-5 border-b border-gray-200 text-sm">
-                      {item.leadName}
-                    </td>
-                    <td className="px-5 py-5 border-b border-gray-200 text-sm">
-                      {item.phone}
-                    </td>
-                    <td className="px-5 py-5 border-b border-gray-200 text-sm">
-                      {item.leadOwner}
-                    </td>
-                    <td className="px-5 py-5 border-b border-gray-200 text-sm">
-                      {item.status}
-                    </td>
-                    <td className="px-5 py-5 border-b border-gray-200 text-sm">
-                      <div className="flex items-center">
-                        <DropdownMenu>
-                          <DropdownMenuTrigger asChild>
-                            <Button variant="ghost" className="h-8 w-8 p-0">
-                              <span className="sr-only">Open menu</span>
-                              <MoreHorizontal className="h-4 w-4" />
-                            </Button>
-                          </DropdownMenuTrigger>
-                          <DropdownMenuContent align="end" className="w-32">
-                            <DropdownMenuItem>View</DropdownMenuItem>
-                            <DropdownMenuItem onClick={() => handleView(item)}>
-                              Upload
-                            </DropdownMenuItem>
-                          </DropdownMenuContent>
-                        </DropdownMenu>
-                      </div>
-                    </td>
-                  </tr>
-                ))}
+                {Array.isArray(designTasks) && designTasks.length > 0 ? (
+                  designTasks.map((item) => (
+                    <tr key={item.id}>
+                      <td className="px-5 py-5 border-b border-gray-200 text-sm">
+                        {item.leadName}
+                      </td>
+                      <td className="px-5 py-5 border-b border-gray-200 text-sm">
+                        {item.phone}
+                      </td>
+                      <td className="px-5 py-5 border-b border-gray-200 text-sm">
+                        {item.leadOwner}
+                      </td>
+                      <td className="px-5 py-5 border-b border-gray-200 text-sm">
+                        {item.status}
+                      </td>
+                      <td className="px-5 py-5 border-b border-gray-200 text-sm">
+                        <div className="flex items-center">
+                          <DropdownMenu>
+                            <DropdownMenuTrigger asChild>
+                              <Button variant="ghost" className="h-8 w-8 p-0">
+                                <span className="sr-only">Open menu</span>
+                                <MoreHorizontal className="h-4 w-4" />
+                              </Button>
+                            </DropdownMenuTrigger>
+                            <DropdownMenuContent align="end" className="w-32">
+                              <DropdownMenuItem>View</DropdownMenuItem>
+                              <DropdownMenuItem
+                                onClick={() => handleView(item)}
+                              >
+                                Upload
+                              </DropdownMenuItem>
+                            </DropdownMenuContent>
+                          </DropdownMenu>
+                        </div>
+                      </td>
+                    </tr>
+                  ))
+                ) : (
+                  <div>Data not found</div>
+                )}
               </tbody>
             </table>
           </div>

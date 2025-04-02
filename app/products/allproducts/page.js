@@ -95,7 +95,9 @@ function Products() {
                 </tr>
               ))
             ) : (
-              <div>Records not found!</div>
+              <div className="w-full flex justify-center">
+                Records not found!
+              </div>
             )}
           </tbody>
         </table>

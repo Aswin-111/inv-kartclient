@@ -134,11 +134,12 @@ function OrderDetailsPage() {
             className="select select-bordered w-full"
           >
             <option value="">Choose a product...</option>
-            {productData.map((product) => (
-              <option key={product._id} value={product._id}>
-                {product.product_name}
-              </option>
-            ))}
+            {Array.isArray(productData) &&
+              productData.map((product) => (
+                <option key={product._id} value={product._id}>
+                  {product.product_name}
+                </option>
+              ))}
           </select>
           {errors.product && (
             <p className="text-red-500 text-sm">{errors.product}</p>
